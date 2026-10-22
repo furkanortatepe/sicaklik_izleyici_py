@@ -11,6 +11,7 @@ cat << 'EOF' > README.md
 
 Bu proje, **ROS 2 (Humble)** kullanılarak geliştirilmiş bir sıcaklık izleme sistemidir. Sistem, iki temel ROS 2 düğümünden (node) oluşur:
 
+
 1. **Yayıncı (Publisher) — `sensor.py`:** Saniyede bir adet 20°C ile 40°C arasında rastgele sıcaklık verisi üretir ve `/sicaklik` konusuna (`Float32` mesaj tipiyle) yayınlar.
 2. **Abone (Subscriber) — `izleyici.py`:** `/sicaklik` konusunu dinler, gelen değeri konsola yazdırır ve değer belirlenen eşik değerinin (varsayılan 30°C) üzerine çıktığında `get_logger().warn()` ile uyarı verir.
 
@@ -27,17 +28,27 @@ Bu proje, ROS 2'de **paket oluşturma**, **düğüm yazma**, **konu (topic) üze
 </p>
 ---
 
-GEREKEN ÇALIŞTIRMA KODLARINI SİZ VERDİNİZ HOCAM ZATEN. 
+---
 
 ## Çalıştırma
 
-```bash
-source ~/ros2_ws/install/setup.bash
-ros2 run sicaklik_izleyici_py sensor
-source ~/ros2_ws/install/setup.bash
-ros2 run sicaklik_izleyici_py izleyici
-source ~/ros2_ws/install/setup.bash
-rqt_graph
+Sistemi çalıştırmak için sırasıyla aşağıdaki komutları terminalinize yapıştırın:
+
+1. Sensör Düğümü:
+`source ~/ros2_ws/install/setup.bash`
+`ros2 run sicaklik_izleyici_py sensor`
+
+2. İzleyici Düğümü (Yeni Terminal):
+`source ~/ros2_ws/install/setup.bash`
+`ros2 run sicaklik_izleyici_py izleyici`
+
+3. Düğüm Grafiği (Yeni Terminal):
+`source ~/ros2_ws/install/setup.bash`
+`rqt_graph`
+
+GEREKEN ÇALIŞTIRMA KODLARINI SİZ VERDİNİZ HOCAM ZATEN. 
+
+
 ## 🧩 2. Veri Akış Diyagramı
 
 Aşağıdaki diyagram, sistemin uçtan uca veri akışını göstermektedir. Sensörden okunan verinin ROS 2 düğümleri arasında nasıl hareket ettiğini adım adım görebilirsiniz:
@@ -47,4 +58,6 @@ graph LR
     A[🌡️ Sensör / Arduino<br/>Sıcaklık Okuma] -->|1. Veri| B[📤 sensor.py<br/>ROS 2 Yayıncı]
     B -->|2. /sicaklik Konusu<br/>Float32 Mesaj| C[📥 izleyici.py<br/>ROS 2 Abone]
     C -->|3. Ekran / Uyarı| D[💻 Terminal Çıktısı]
-    
+
+
+
