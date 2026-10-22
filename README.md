@@ -2,20 +2,36 @@ cd ~/ros2_ws/src/sicaklik_izleyici_py
 cat << 'EOF' > README.md
 # 🌡️ Sıcaklık İzleyici (sicaklik_izleyici_py)
 
-Bu proje, **ROS 2 (Humble)** kullanılarak geliştirilmiş bir sıcaklık izleme sistemidir. Rastgele sıcaklık verisi üreten bir yayıncı (publisher) ve bu veriyi anlık olarak takip eden bir abone (subscriber) düğümünden oluşur.
+<p align="center">
+  <img src="https://img.shields.io/badge/ROS2-Humble-blue?style=for-the-badge&logo=ros" alt="ROS2 Humble"/>
+  <img src="https://img.shields.io/badge/Python-3.10-yellow?style=for-the-badge&logo=python" alt="Python 3.10"/>
+  <img src="https://img.shields.io/badge/Lisans-Apache--2.0-green?style=for-the-badge" alt="Apache 2.0"/>
+  <img src="https://img.shields.io/badge/Durum-Tamamlandı-brightgreen?style=for-the-badge" alt="Durum"/>
+</p>
 
-## ✨ Özellikler
-- **Gerçek Zamanlı Veri:** `/sicaklik` konusuna saniyede bir adet 20°C - 40°C arası rastgele `Float32` veri yayınlar.
-- **Anlık Takip:** Abone düğümü gelen veriyi konsola yazdırır.
-- **Akıllı Uyarı Sistemi:** Sıcaklık 30°C'yi aştığında `WARN` seviyesinde uyarı verir.
-- **Parametrik Kontrol (Bonus):** Uyarı eşik değeri `declare_parameter` ile dinamik hale getirilmiştir.
+Bu proje, **ROS 2 (Humble)** kullanılarak geliştirilmiş bir sıcaklık izleme sistemidir. Sistem, iki temel ROS 2 düğümünden (node) oluşur:
 
-## 🛠️ Kurulum
-Projeyi kendi ROS 2 workspace'inize klonlayın ve derleyin:
+1. **Yayıncı (Publisher) — `sensor.py`:** Saniyede bir adet 20°C ile 40°C arasında rastgele sıcaklık verisi üretir ve `/sicaklik` konusuna (`Float32` mesaj tipiyle) yayınlar.
+2. **Abone (Subscriber) — `izleyici.py`:** `/sicaklik` konusunu dinler, gelen değeri konsola yazdırır ve değer belirlenen eşik değerinin (varsayılan 30°C) üzerine çıktığında `get_logger().warn()` ile uyarı verir.
 
-```bash
-cd ~/ros2_ws/src
-git clone https://github.com/furkanortatepe/sicaklik_izleyici_py.git
-cd ~/ros2_ws
-colcon build --packages-select sicaklik_izleyici_py
-source install/setup.bash
+Bu proje, ROS 2'de **paket oluşturma**, **düğüm yazma**, **konu (topic) üzerinden haberleşme**, **logger kullanımı** ve **parametre (parameter) tanımlama** gibi temel kavramları uygulamalı olarak göstermektedir.
+
+---
+
+## 📸 1. Sistem Mimarisi ve Donanım Temsili
+
+> **Not:** Bu projede sıcaklık verisi yazılımsal olarak simüle edilmektedir. Aşağıdaki görsel, sistemin gerçek donanım (Arduino + LM35/DHT11 sıcaklık sensörü) ile nasıl entegre edilebileceğini **temsili olarak** göstermektedir.
+
+📸 **[GÖRSEL 1: `arduino_sensor.png` — Arduino + sıcaklık sensörü fotoğrafı. Görselin üzerine oklarla ve numaralarla şunları işaretle: ① Sıcaklık Sensörü (LM35/DHT11), ② Arduino Mikrodenetleyici, ③ ROS 2 Düğümüne Veri Aktarımı]**
+
+---
+
+## 🧩 2. Veri Akış Diyagramı
+
+Aşağıdaki diyagram, sistemin uçtan uca veri akışını göstermektedir. Sensörden okunan verinin ROS 2 düğümleri arasında nasıl hareket ettiğini adım adım görebilirsiniz:
+
+```mermaid
+graph LR
+    A[🌡️ Sensör / Arduino<br/>Sıcaklık Okuma] -->|1. Veri| B[📤 sensor.py<br/>ROS 2 Yayıncı]
+    B -->|2. /sicaklik Konusu<br/>Float32 Mesaj| C[📥 izleyici.py<br/>ROS 2 Abone]
+    C -->|3. Ekran / Uyarı| D[💻 Terminal Çıktısı]
