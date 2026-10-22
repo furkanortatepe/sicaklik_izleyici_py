@@ -31,8 +31,9 @@ Bu proje, ROS 2'de **paket oluşturma**, **düğüm yazma**, **konu (topic) üze
 
 Aşağıdaki diyagram, sistemin uçtan uca veri akışını göstermektedir. Sensörden okunan verinin ROS 2 düğümleri arasında nasıl hareket ettiğini adım adım görebilirsiniz:
 
-```mermaid
+mermaid
 graph LR
     A[🌡️ Sensör / Arduino<br/>Sıcaklık Okuma] -->|1. Veri| B[📤 sensor.py<br/>ROS 2 Yayıncı]
     B -->|2. /sicaklik Konusu<br/>Float32 Mesaj| C[📥 izleyici.py<br/>ROS 2 Abone]
     C -->|3. Ekran / Uyarı| D[💻 Terminal Çıktısı]
+    
