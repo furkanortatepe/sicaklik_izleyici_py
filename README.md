@@ -27,6 +27,17 @@ Bu proje, ROS 2'de **paket oluşturma**, **düğüm yazma**, **konu (topic) üze
 </p>
 ---
 
+GEREKEN ÇALIŞTIRMA KODLARINI SİZ VERDİNİZ HOCAM ZATEN. 
+
+## Çalıştırma
+
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 run sicaklik_izleyici_py sensor
+source ~/ros2_ws/install/setup.bash
+ros2 run sicaklik_izleyici_py izleyici
+source ~/ros2_ws/install/setup.bash
+rqt_graph
 ## 🧩 2. Veri Akış Diyagramı
 
 Aşağıdaki diyagram, sistemin uçtan uca veri akışını göstermektedir. Sensörden okunan verinin ROS 2 düğümleri arasında nasıl hareket ettiğini adım adım görebilirsiniz:
