@@ -23,7 +23,7 @@ Bu proje, ROS 2'de **paket oluşturma**, **düğüm yazma**, **konu (topic) üze
 > **Not:** Bu projede sıcaklık verisi yazılımsal olarak simüle edilmektedir. Aşağıdaki görsel, sistemin gerçek donanım (Arduino + LM35/DHT11 sıcaklık sensörü) ile nasıl entegre edilebileceğini **temsili olarak** göstermektedir.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/furkanortatepe/sicaklik_izleyici_py/main/arduino_sensor.png" alt="Arduino ve Sıcaklık Sensörü" width="700"/>
+  <img https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/16x2_LCD_Arduino_LM35_temperature_sensor.svg/960px-16x2_LCD_Arduino_LM35_temperature_sensor.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail>
 </p>
 ---
 
